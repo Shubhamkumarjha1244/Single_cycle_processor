@@ -6,6 +6,16 @@ INFO: [VRFC 10-311] analyzing module Instruction_memory
 INFO: [VRFC 10-311] analyzing module data_memory
 INFO: [VRFC 10-311] analyzing module register_file
 INFO: [VRFC 10-311] analyzing module extend_12_to_32
+INFO: [VRFC 10-311] analyzing module main_decoder
+INFO: [VRFC 10-311] analyzing module alu_decoder
+INFO: [VRFC 10-311] analyzing module control_unit
+INFO: [VRFC 10-311] analyzing module full_adder
+INFO: [VRFC 10-311] analyzing module two_one_mux
+INFO: [VRFC 10-311] analyzing module one_bit_carry_select_adder
+INFO: [VRFC 10-311] analyzing module n_bit_carry_select_adder
+INFO: [VRFC 10-311] analyzing module and_block
+INFO: [VRFC 10-311] analyzing module or_block
+INFO: [VRFC 10-311] analyzing module alu
 INFO: [VRFC 10-311] analyzing module single_cycle_processor
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/SHUBHAM_KUMAR_JHA/Desktop/HPCES Lab/single_cycle_processor/single_cycle_processor.srcs/sim_1/new/test_tb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module test_tb

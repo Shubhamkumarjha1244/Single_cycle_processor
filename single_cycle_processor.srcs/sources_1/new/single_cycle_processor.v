@@ -318,6 +318,46 @@ module alu(alu_control,innA,innB,zero,out);
          endcase
 endmodule
                 
-module single_cycle_processor();
-
+module single_cycle_processor(clk);
+    input clk;
+    
+    
+    wire[31:0] pc_plus_4,pc_target,pc_next,pc; //intermediate wires
+    wire[31:0] inst,result,read_data_B,src_A,src_B,imm_ext,alu_result,read_data;
+    wire reg_write,zero,pc_src,result_src,mem_write,alu_src;
+    wire[1:0] imm_src;
+    wire[2:0] alu_control;
+    
+    
+    
+    two_one_mux_32_bit mux_pc(pc_plus_4,pc_target,pc_src,pc_next);//pc_mux
+    d_ff_32bit buffer(clk,pc_next,pc);//buffer
+    Instruction_memory inst_mem(pc,inst);//instruction rom
+    adder_32bit add_4(pc,3'd4,pc_plus_4); //pc_adder_4
+    
+    //registor file
+    register_file reg_file(clk,reg_write,inst[19:15],inst[24:20],inst[11:7],result,src_A,read_data_B);
+    
+    
+    //control unit for single cycle processor
+    control_unit control_unit(zero,inst[6:0],inst[14:12],inst[30],pc_src,result_src,mem_write,alu_src,imm_src,reg_write,alu_control);
+    
+    //sign_extension block
+    extend_12_to_32 extend(imm_src,inst[31:7],imm_ext);
+    
+    //src_B mux
+    two_one_mux_32_bit src_b_mux(read_data_B,imm_ext,alu_src,src_B);
+    
+    //ALU intialization
+    alu alu1(alu_control,src_A,src_B,zero,alu_result);
+    
+    //immediate value adder
+    adder_32bit pc_immediate_adder(pc,imm_ext,pc_target);
+    
+    //data_memory
+    data_memory data_mem(clk,mem_write,alu_result,read_data_B,read_data);
+    
+    //result_mux
+    two_one_mux_32_bit result_mux(alu_result,read_data,result_src,result);
+    
 endmodule
